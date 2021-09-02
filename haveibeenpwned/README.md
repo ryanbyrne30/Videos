@@ -4,7 +4,9 @@ Instead the script uses a segment of the hash of your password to check against 
 The result is the amount of times your password has appeared in various leaks.
 
 Check out the HaveIBeenPwned API here: https://haveibeenpwned.com/API/v3
+
 The technique used by the script is specified here: https://haveibeenpwned.com/API/v3#SearchingPwnedPasswordsByRange
+
 
 ## Usage
 Clone or download ****haveibeenpwned.py**** then run
