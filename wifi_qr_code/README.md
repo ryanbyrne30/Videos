@@ -12,7 +12,8 @@ This script uses the ****wifi_qrcode_generator**** library. [Here](https://githu
 ## How to use
 Install wifi_qrcode_generator
 ```
-pip3 install wifi_qrcode_generator requests
+pip3 install wifi_qrcode_generator 
+pip3 install requests
 ```
 
 Run the script
