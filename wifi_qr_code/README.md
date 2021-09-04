@@ -16,7 +16,7 @@ pip3 install wifi_qrcode_generator
 pip3 install requests
 ```
 
-Run the script
+Download and run the script
 ```
 python3 wifi_qr_code.py
 ```
