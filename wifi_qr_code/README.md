@@ -11,13 +11,13 @@ This script uses the ****wifi_qrcode_generator**** library. [Here](https://githu
 
 ## How to use
 Install wifi_qrcode_generator
-'''
+```
 pip3 install wifi_qrcode_generator
-'''
+```
 
 Run the script
-'''
+```
 python3 wifi_qr_code.py
-'''
+```
 
 That easy!
