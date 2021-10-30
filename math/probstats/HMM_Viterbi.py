@@ -42,7 +42,8 @@ def viterbi(O, S, Pi, Y, A, B):
     """
     k = len(S)
     t = len(Y)
-
+    A = np.array(A)
+    B = np.array(B)
     T1 = np.zeros((k, t))
     T2 = np.zeros((k, t))
     T1[:,0] = B[:,O.index(Y[0])] * Pi
@@ -53,10 +54,10 @@ def viterbi(O, S, Pi, Y, A, B):
             T1[i, j] = np.max(c)
             T2[i, j] = argmax(c)
 
-    print("T1")
-    printMatrix(T1)
-    print("T2")
-    printMatrix(T2)
+    # print("T1")
+    # printMatrix(T1)
+    # print("T2")
+    # printMatrix(T2)
 
     z = argmax(T1[:,-1])
     print(T1[:,-1])
@@ -73,10 +74,41 @@ def printMatrix(M):
 
 
 if __name__ == "__main__":
-    seqA = list("cabbaaabbbddaa")
-    seqB = list("22121100001221")
-    seqR = list("12101")
+    # seqA = list("cabbaaabbbddaa")
+    # seqB = list("22121100001221")
+    # seqR = list("12101")
 
-    x, p = HMM_Viterbi(seqA, seqB, seqR)    
+    # x, p = HMM_Viterbi(seqA, seqB, seqR)    
+    
+
+    # obs = ["normal", "cold", "dizzy"]
+    # states = ["Healthy", "Fever"]
+    # Pi = [ 0.6, 0.4 ]
+    # A = [ 
+    #     [ 0.7, 0.3 ],
+    #     [ 0.4, 0.6 ]
+    # ]
+    # B = [
+    #     [ 0.6, 0.4, 0.1 ],
+    #     [ 0.1, 0.3, 0.6 ]
+    # ]
+    # Y = [ "normal", "cold", "dizzy" ]
+
+    obs = [ "Bob", "ate", "the", "fruit" ]
+    states = [ "n", "v", "d" ]
+    A = [
+        [ .1, .8, .1 ],
+        [ .1, .1, .8 ],
+        [ .8, .1, .1 ]
+    ]
+    B = [ 
+        [ 0.9, .05, .05, .9 ],
+        [ .05, .9, .05, .05 ],
+        [ .05, .05, .9, .05 ]
+    ]
+    Pi = [ .9, .05, .05 ]
+    Y = [ "Bob", "ate", "the", "fruit" ]
+    x, p = viterbi(obs, states, Pi, Y, A, B)
+
     print(x)
     print(f"{round(p*100, 2)}%")
