@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/Fseries/480p15/partial_movie_files/Fseries/3163782288_1162440410_1058447505.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/Fseries/480p15/partial_movie_files/Fseries/2201830969_2839631542_2166292798.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/Fseries/480p15/partial_movie_files/Fseries/2201830969_4225923405_180740488.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/Fseries/480p15/partial_movie_files/Fseries/2201830969_1736372577_116311850.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/Fseries/480p15/partial_movie_files/Fseries/2201830969_904753138_3993803633.mp4'

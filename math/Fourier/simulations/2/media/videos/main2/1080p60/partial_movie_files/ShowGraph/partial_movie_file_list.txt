@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/main2/1080p60/partial_movie_files/ShowGraph/450974505_294627504_4207651870.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/main2/1080p60/partial_movie_files/ShowGraph/34786186_1669539993_1609013913.mp4'
+file 'file:/home/ryan/Documents/projects/ryanbyrne30/Videos/math/Fourier/simulations/2/media/videos/main2/1080p60/partial_movie_files/ShowGraph/34786186_157593251_1240453128.mp4'
