@@ -45,7 +45,7 @@ def run(series=None, speed=1000):
                 config.MSXTick, config.MSYTick, config.MSSize)
             renderSurfaces(screen, MSSurface, CSSurface, SSSurface)
             
-            time += 0.003
+            time += config.dt
             pygame.display.update()
             clock.tick(speed)
 

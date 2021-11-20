@@ -2,31 +2,32 @@ import cmath
 import numpy as np
 
 RENDER_ALL = True
+dt = 0.003
+# dt = 0.0005
 
 # Data
-# series = [ 
-#     (cmath.rect(1, 1), 0), 
-#     (cmath.rect(0.2, 2), -2), 
-#     (cmath.rect(0.6, 0.4), 3),
-#     (cmath.rect(5, 0.776), 3.4),
-#     (cmath.rect(3, 0.2), -7),
-#     (cmath.rect(1, 1), 9),
-#     (cmath.rect(0.7, 0.2), 0.4),
-# ]
-
-series = [
-    (cmath.rect(1, 0), 0),
-    (cmath.rect(1, 0), 0),
-    (cmath.rect(1, 0), 0),
-    (cmath.rect(1, 0), 0),
-    (cmath.rect(1, 0), 0),
-    (cmath.rect(1, 0), 3.01),
-    (cmath.rect(0.5, 0.12314), 5),
-    (cmath.rect(0.5, 0.12314), 7),
+series = [ 
+    (cmath.rect(1, 1), 1), 
+    (cmath.rect(0.2, 2), -2), 
+    (cmath.rect(0.6, 0.4), 3),
+    (cmath.rect(5, 0.776), 3.4),
+    (cmath.rect(3, 0.2), -7),
+    (cmath.rect(1, 1), 9),
 ]
 
+# series = [
+#     (cmath.rect(1, 0), 0),
+#     (cmath.rect(1, 0), 0),
+#     (cmath.rect(1, 0), 0),
+#     (cmath.rect(1, 0), 0),
+#     (cmath.rect(1, 0), 0),
+#     (cmath.rect(1, 0), 3.01),
+#     (cmath.rect(0.5, 0.12314), 5),
+#     (cmath.rect(0.5, 0.12314), 7),
+# ]
+
 nfs = np.sum([ cmath.polar(f[0])[0] for f in series ])
-span = 0.5
+span = nfs
 domain = (-span, span)
 range = (-span, span)
 

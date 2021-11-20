@@ -2,70 +2,75 @@ import pygame
 import numpy as np
 import cmath 
 from display import *
+import random
 from random import randrange
+random.seed(0)
+import json
+from time import sleep
+
 
 WIDTH, HEIGHT = 1800, 1000
 PI = cmath.pi
 SCALE = 250
 
-# POINTS = [ randrange(0, SCALE)+randrange(0, SCALE)*1j for _ in range(4) ]
-POINTS = [ i+i*1j for i in range(0, 150, 10) ]
-FOURIER = dft(POINTS)
+with open('pi.json', 'r') as f:
+    svg = json.load(f)
 
-print(FOURIER)
+# POINTS = np.array([ cmath.rect(i/2/cmath.pi, np.random.normal(0, 1)) for i in range(900) ]) * 2
+POINTS = np.array([ p[0]+p[1]*1j for p in svg[::4] ]) * 0.4
+FOURIER = dft(POINTS)
 
 # colors
 BLACK = 0,0,0
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen.fill(BLACK)
+main = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+main.fill(BLACK)
+screen.blit(main, (0,0))
 
 #####################################################
 
-
 path = []
-
+t_timeout = 0.02
 t = 0
 clock = pygame.time.Clock()
 running = True
 isPaused = False
+dt = cmath.pi*2/len(FOURIER)
 while running:
+    main.fill(BLACK)
+
+    point = epicycles(main, WIDTH/4+HEIGHT/2*1j, 0, FOURIER, t)
+    for p in POINTS:
+        pygame.draw.circle(main, (255,0,0), (6*WIDTH/8+p.real, HEIGHT/2 + p.imag), 1)
+
+    for p in path:
+        pygame.draw.circle(main, (100, 100, 20), (p.real, p.imag), 2)
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             isPaused = True if not isPaused else False 
-    screen.fill(BLACK)
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            t += dt
+            path.insert(0, point)
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            t -= dt
+            path.pop(0)
+        
+    if len(path) > len(POINTS) * cmath.pi*2/len(FOURIER) / dt:
+        path = []
 
-    for p in POINTS:
-        pygame.draw.circle(screen, (255,0,0), (WIDTH/2+p.real, HEIGHT/2-p.imag), 4)
-        pygame.draw.circle(screen, (255,0,0), (WIDTH/8, HEIGHT/2-p.imag), 4)
-        pygame.draw.circle(screen, (255,0,0), (WIDTH/2+p.real, HEIGHT/8), 4)
-
-    # circCos_center = drawEpicenter(screen, (WIDTH/2, HEIGHT/8), FOURIER[0][2], FOURIER[0][1], FOURIER[0][3], t)
-    circSine_center = drawEpicenter(screen, (WIDTH/8, HEIGHT/2), FOURIER[0][2], FOURIER[0][1], FOURIER[0][3], t)
-    for avg, freq, amp, phase in FOURIER[1:]:
-        # circCos_center = drawEpicenter(screen, circCos_center, amp, freq, phase, t)
-        circSine_center = drawEpicenter(screen, circSine_center, amp, freq, phase, t)
-
-    pathStart = WIDTH/2, HEIGHT/2
-    # point = circCos_center[0], circSine_center[1]
-    point = WIDTH/2, circSine_center[1]
-    path.insert(0, point)
-    for i in range(len(path)):
-    # for x, y in path:
-        pygame.draw.circle(screen, (100, 100, 20), (WIDTH/2+i, path[i][1]), 2)
-        # pygame.draw.circle(screen, (100, 100, 20), x, y), 2)
-    pygame.draw.line(screen, (255,255,255), circSine_center, point)
-    # pygame.draw.line(screen, (255,255,255), circCos_center, point)
-
-    path = path[:int(WIDTH/2)]
-
-    # dt = cmath.pi*2/len(FOURIER)
-    # t += dt / 2
-    t += 0.01
+    if not isPaused:
+        t += dt
+        path.insert(0, point)
+        sleep(t_timeout)
+        
+    screen.blit(main, (0,0))
     pygame.display.update()
-    clock.tick(100)
+    clock.tick(1000)
 
 pygame.quit()
 
