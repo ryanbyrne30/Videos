@@ -1,16 +1,15 @@
-from Scene import Scene
-from Surface import Surface
-from globals import *
+from anim import *
 import numpy as np
 from scipy.integrate import odeint
 import random
 
 class LorenzAttractor(Scene):
-    def __init__(self, width, height, xrange, yrange, color=BLACK):
+    def __init__(self, width, height, xrange, yrange, color=BLACK, 
+            sigma=10, rho=28, beta=8/3):
         super().__init__(width, height, xrange, yrange, color)
-        self.sigma = None 
-        self.rho = None 
-        self.beta = None
+        self.sigma = sigma 
+        self.rho = rho
+        self.beta = beta
 
     def deltaX(self, x, y, sigma):
         return sigma*y - sigma*x
@@ -28,67 +27,15 @@ class LorenzAttractor(Scene):
         z1 = self.deltaZ(x, y, z, self.beta)
         return x1, y1, z1
 
-    def plot2d(self, x0, y0, z0, sigma, rho, beta, frames, trailLength=1000):
-        self.sigma = sigma 
-        self.rho = rho 
-        self.beta = beta
+    def graph(self, state0, t_end=40, t_step=0.01, t_start=0, trailLength=100, frame_skip=40, radius=2, color=PINK, opacity=255):
+        self.graphFunction(self.nextPoint, state0, t_end, t_step, t_start, trailLength, frame_skip, radius, color, opacity)
 
-        start = 0.0
-        end = 40.0
-        iter = 0.001
-        frame_skip = 40
-        t = np.arange(start, end, iter)
-        print("Num frames:", (end-start)/iter/frame_skip)
-        particles = 20
-        max_pos = 20
+    def graphRandomParticles(self, particles, t_end=40, t_step=0.01, t_start=0, 
+            trailLength=100, frame_skip=40, radii_min=0.5, radii_max=1.75, color=None, 
+            opacity=255):
+        self.graphFunctionWithRandomParticles(self.nextPoint, particles, t_end, t_step, t_start, 
+            trailLength, frame_skip, radii_min, radii_max, color, 
+            opacity)
 
-        radii = [
-            random.randrange(1, 4) / 2
-            for _ in range(particles)
-        ]
-        colors = [
-            (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
-            for _ in range(particles)
-        ]
-        all_states = [ 
-            odeint(self.nextPoint, 
-                (random.random()*max_pos, random.random()*max_pos, random.random()*max_pos), 
-                t)
-            for _ in range(particles)
-        ]
-
-        for i in range(0, len(all_states[0]), frame_skip):
-            i_start = i-trailLength if i-trailLength > 0 else 0
-            surface = Surface(self.width, self.height, self.xrange, self.yrange)
-            for j in range(particles):
-                state = all_states[j]
-                trail = state[i_start: i]
-                points = [ (t[0], t[1]) for t in trail ]
-                surface.plotPoints(points, radius=radii[j], trail=True, color=colors[j])
-            surface.renderPoints()
-            self.images.append(surface.im)
-
-
-        # states = odeint(self.nextPoint, state0, t)
-        # states2 = odeint(self.nextPoint, (0.5, 1.5, 2), t)
-        # states3 = odeint(self.nextPoint, (1, 3, 1.75), t)
-        # states4 = odeint(self.nextPoint, (7, 4, 0.5), t)
-
-        # for i in range(0, len(states), 40):
-        #     i_start = i-trailLength if i-trailLength > 0 else 0
-        #     trail = states[i_start: i]
-        #     trail2 = states2[i_start: i]
-        #     trail3 = states3[i_start: i]
-        #     trail4 = states4[i_start: i]
-        #     points = [ (t[0], t[1]) for t in trail ]
-        #     points2 = [ (t[0], t[1]) for t in trail2 ]
-        #     points3 = [ (t[0], t[1]) for t in trail3 ]
-        #     points4 = [ (t[0], t[1]) for t in trail4 ]
-        #     surface = Surface(self.width, self.height, self.xrange, self.yrange)
-        #     surface.plotPoints(points, radius=1, trail=True)
-        #     surface.plotPoints(points2, radius=1, trail=True)
-        #     surface.plotPoints(points3, radius=1, trail=True)
-        #     surface.plotPoints(points4, radius=1, trail=True)
-        #     surface.renderPoints()
-        #     self.images.append(surface.im)
-
+    def saveGif(self, ofile):
+        return super().saveGif(ofile)

@@ -1,35 +1,19 @@
 from PIL import Image, ImageDraw
 import numpy as np
 from LorenzAttractor import LorenzAttractor
-from Surface import Surface
-from Scene import Scene
+from anim import *
 import random
-from globals import *
 
-images = []
-points = []
+
+
+
 
 width = 800
 height = 800
-center = width // 2
-white = (255, 255, 255)
-radius = 2
-fps = 500
-duration = 3
-frames = duration * fps
+xrange = [-30, 30]
+yrange = [-30, 30]
 
-xrange = -25, 25
-yrange = -25, 25
-
-def funX(t):
-    return np.cos(t*2*PI)+np.cos(8*t*PI)
-
-def funY(t):
-    return np.sin(t*2*PI)+np.sin(8*t*PI)
-
-# ts = [ 2*i/frames for i in range(frames) ]
-# scene = Scene(width, height, xrange, yrange)
-# scene.plotParametric(funX, funY, ts, trail=True)
 scene = LorenzAttractor(width, height, xrange, yrange)
-scene.plot2d(1, 1, 1, 10, 28, 8/3, 10)
-scene.saveGif('temp.gif')
+# scene.graph((1, 7, 4), trailLength=100, t_step=0.01, frame_skip=10)
+scene.graphRandomParticles(10, t_start=20, trailLength=10, t_end=26, t_step=0.002, frame_skip=40, color=None, radii_max=3, radii_min=0.75)
+scene.saveGif('gifs/lorenz.gif')
