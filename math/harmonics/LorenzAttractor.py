@@ -37,5 +37,3 @@ class LorenzAttractor(Scene):
             trailLength, frame_skip, radii_min, radii_max, color, 
             opacity)
 
-    def saveGif(self, ofile):
-        return super().saveGif(ofile)
