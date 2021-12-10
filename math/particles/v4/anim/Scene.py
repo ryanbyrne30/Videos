@@ -117,12 +117,17 @@ class RenderThread(threading.Thread):
 
     
     def run(self):
+        trailLength = 10
+        opacities = [ int(i/trailLength*255) for i in range(trailLength) ]
         for idx in self.idxs:
+            idx0 = max(0, idx-trailLength)
+            trail = self.states[:,idx0:idx]
             print(f"{idx}/{self.idxs[-1]}")
             frame = Frame(self.width, self.height, self.xrange, self.yrange, self.color)
-            for p in range(self.states.shape[0]):
-                x, y = self.states[p][idx]
-                frame.addPoint(x, y, opacity=255, radius=0.6)
+            for i in range(trail.shape[1]):
+                for p in range(trail.shape[0]):
+                    x, y = trail[p][i]
+                    frame.addPoint(x, y, opacity=opacities[i], radius=0.6)
             frame.renderPoints()
             padding = "".join(["0" for _ in range(9-len(str(idx)))])
             padded = padding+str(idx)
